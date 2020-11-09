@@ -70,7 +70,7 @@ void SimApp::createFlowField() {
 
 void SimApp::createParticles() {
 	srand(1);
-	int particle_count = 50000;
+	int particle_count = 10000;
 
 	
 	// Random particle start
@@ -83,8 +83,8 @@ void SimApp::createParticles() {
 }					   				   
 
 void SimApp::render() {
-	//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-	//SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_RenderClear(renderer);
 
 	const uint32_t bitmask_r = 255 << 24;
 	const uint32_t bitmask_g = 255 << 16;
