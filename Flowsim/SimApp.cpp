@@ -32,7 +32,7 @@ SimApp::~SimApp() {
 
 void SimApp::createFlowField() {
 	
-	sim.addUniform(0, 300);
+	sim.addUniform(0, 500);
 	//sim.addSourceSink(630, 360, 180000);
 	//sim.addSourceSink(650, 360, -180000);
 	//sim.addVortex(640, 360, 50000);*/
@@ -70,7 +70,7 @@ void SimApp::createFlowField() {
 
 void SimApp::createParticles() {
 	srand(1);
-	int particle_count = 10000;
+	int particle_count = 100;
 
 	
 	// Random particle start
@@ -80,7 +80,9 @@ void SimApp::createParticles() {
 
 		sim.addParticle(rnd_x, rnd_y);
 	}
-}					   				   
+}					   			
+
+
 
 void SimApp::render() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -141,6 +143,15 @@ void SimApp::mainLoop() {
 	while (running) {
 		uint32_t currentTime = SDL_GetTicks();
 		float dt = float((currentTime - time)) / 1000;
+
+		int mouse_x, mouse_y;
+
+		SDL_PumpEvents();
+		if (SDL_GetMouseState(&mouse_x, &mouse_y) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+			for (int i = 0; i < 8; i++) {
+				sim.addParticle(mouse_x+pow(-1,i) * (rand()%5), mouse_y + pow(-1, i) * (rand() % 5));
+			}
+		}
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
