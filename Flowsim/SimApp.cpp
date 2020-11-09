@@ -40,7 +40,7 @@ void SimApp::createFlowField() {
 
 	
 	// Some airfoil based on wikipedia NACA 5 digit camber line function
-	int num_steps = 333;
+	int num_steps = 33;
 	float lift_mult = 50000;
 	float tip_pos_x = 300;
 	float tip_pos_y = 360;

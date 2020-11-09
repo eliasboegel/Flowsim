@@ -127,12 +127,20 @@ void Simulator::updateVelColorFragment(int index_start_x, int index_stop_x, int 
 	for (int i = index_start_x; i < index_stop_x; i++) {
 		for (int j = index_start_y; j < index_stop_y; j++) {
 			// Find color from velocity field and cache it
-			if (streamfunct_cache[i + 1][j + 1] < streamfunct_stag) {
+
+			#if DRAW_MODE == 1
+				color_cache[i][j] = calcColor(i, j);
+			#endif
+
+			#if DRAW_MODE == 2
+			if (abs(fmod(streamfunct_cache[i + 1][j + 1], 5000)) < 500) {
 				color_cache[i][j] = (MATERIAL_R << 24) | (MATERIAL_G << 16) | (MATERIAL_B << 8) | 255;
 			}
 			else {
 				color_cache[i][j] = calcColor(i, j);
 			}
+			#endif
+
 		}
 	}
 }

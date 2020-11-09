@@ -9,7 +9,9 @@
 #define USE_PARTICLES 0
 
 
-#define STREAMFUNCT_EPSILON 50
+// 1: Draw full field
+// 2: Draw streamlines
+#define DRAW_MODE 2
 
 
 #define LOW_P_R 0
