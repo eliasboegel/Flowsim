@@ -6,12 +6,10 @@
 #define GRID_SIZE_W 1280
 #define GRID_SIZE_H 720
 
-#define USE_PARTICLES 0
-
-
 // 1: Draw full field
 // 2: Draw streamlines
-#define DRAW_MODE 2
+// 3: Draw particles
+#define DRAW_MODE 3
 
 
 #define LOW_P_R 0

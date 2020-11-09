@@ -70,23 +70,16 @@ void SimApp::createFlowField() {
 
 void SimApp::createParticles() {
 	srand(1);
-	int particle_count = 360;
+	int particle_count = 50000;
 
-	// Particle line on the left
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < particle_count; j++) {
-			sim.addParticle(3 * i, SCREEN_H / particle_count * j);
-		}
-	}
-
-	/*
+	
 	// Random particle start
 	for (int j = 0; j < particle_count; j++) {
-		float rnd_x = static_cast<float>(rand() * SCREEN_WIDTH) / RAND_MAX;
-		float rnd_y = static_cast<float>(rand() * SCREEN_HEIGHT) / RAND_MAX;
+		float rnd_x = static_cast<float>(rand() * SCREEN_W) / RAND_MAX;
+		float rnd_y = static_cast<float>(rand() * SCREEN_H) / RAND_MAX;
 
-		particles.push_back(new Particle(rnd_x, rnd_y));
-	}*/
+		sim.addParticle(rnd_x, rnd_y);
+	}
 }					   				   
 
 void SimApp::render() {
@@ -100,8 +93,11 @@ void SimApp::render() {
 	auto particles = *sim.getParticlesPtr();
 
 	for (auto& particle : particles) {
+		uint8_t r = (particle.col >> 24) & 255;
+		uint8_t g = (particle.col >> 16) & 255;
+		uint8_t b = (particle.col >> 8) & 255;
 
-		SDL_SetRenderDrawColor(renderer, particle.col && bitmask_r, particle.col && bitmask_g, particle.col && bitmask_b, 255);
+		SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 		SDL_RenderDrawPoint(renderer, int(particle.x), int(particle.y));
 	}
 
@@ -140,7 +136,7 @@ void SimApp::renderNoParticles() {
 
 void SimApp::mainLoop() {
 
-	renderNoParticles();
+	//renderNoParticles();
 
 	while (running) {
 		uint32_t currentTime = SDL_GetTicks();
@@ -157,12 +153,16 @@ void SimApp::mainLoop() {
 
 		
 
-		/*
+		
 		if (dt > (1 / FPS)) {
+			#if DRAW_MODE == 3
 			sim.simulateParticles(dt/10);
 			render();
+			#else
+			renderNoParticles();
+			#endif
 
 			time = currentTime;
-		}*/
+		}
 	}
 }

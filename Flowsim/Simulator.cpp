@@ -1,6 +1,7 @@
 #include "Simulator.h"
 
 #include <thread>
+#include <algorithm>
 
 Simulator::Simulator() {
 
@@ -14,12 +15,14 @@ Simulator::~Simulator() {
 
 void Simulator::simulateParticles(float dt) {
 	for (auto& particle : particles) {
-		//std::cout << std::get<0>(vel) << ", " << std::get<1>(vel) << "\n";
 		int x = static_cast<int>(particle.x);
 		int y = static_cast<int>(particle.y);
 
 		float v_x = velocity_cache[x][y][0];
 		float v_y = velocity_cache[x][y][1];
+
+		particle.x = particle.x + v_x * dt;
+		particle.y = particle.y + v_y * dt;
 
 		if (particle.x < 0) {
 			particle.x = SCREEN_W;
@@ -38,8 +41,10 @@ void Simulator::simulateParticles(float dt) {
 			particle.y = 0;
 		}
 
-		particle.x = particle.x + v_x * dt;
-		particle.y = particle.y + v_y * dt;
+		
+
+		x = static_cast<int>(particle.x);
+		y = static_cast<int>(particle.y);
 
 		particle.col = color_cache[x][y];
 	}
@@ -139,6 +144,10 @@ void Simulator::updateVelColorFragment(int index_start_x, int index_stop_x, int 
 			else {
 				color_cache[i][j] = calcColor(i, j);
 			}
+			#endif
+
+			#if DRAW_MODE == 3
+			color_cache[i][j] = calcColor(i, j);
 			#endif
 
 		}
