@@ -113,10 +113,10 @@ void Simulator::updateVelColorFragment(int index_start_x, int index_stop_x, int 
 	for (int i = index_start_x; i < index_stop_x; i++) {
 		for (int j = index_start_y; j < index_stop_y; j++) {
 			// Find u from streamfunction cache and cache it
-			velocity_cache[i][j][0] = streamfunct_cache[i][j + 2] - streamfunct_cache[i][j];
+			velocity_cache[i][j][0] = streamfunct_cache[i][j] - streamfunct_cache[i][j + 2];
 
 			// Find v from streamfunction cache and cache it
-			velocity_cache[i][j][1] = streamfunct_cache[i][j] - streamfunct_cache[i + 2][j];
+			velocity_cache[i][j][1] = streamfunct_cache[i + 2][j] - streamfunct_cache[i][j];
 
 			float v_x = velocity_cache[i][j][0];
 			float v_y = velocity_cache[i][j][1];
